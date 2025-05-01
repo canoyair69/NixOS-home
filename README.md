@@ -1,11 +1,65 @@
-```markdown
+
 # NixOS-home: Managing Dotfiles with Nix
 
 This document outlines how to manage your dotfiles using Nix and Home Manager.
 
-## Prerequisites
+> Install XCode CLI tools
+```
+```
+xcode-select --install
 
-Before proceeding, ensure you have Nix installed on your system. After installation, it's recommended to create or modify the Nix configuration file at `$HOME/.config/nix/nix.conf` with the following content to enable experimental features:
+Install Nix (a reboot could be necessary)
+
+```
+sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
+
+```
+
+Add home-manager and unstable channels
+
+```
+
+nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable
+nix-channel --update
+export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+
+```
+Install home-manager
+```
+nix-shell '<home-manager>' -A install
+
+```
+
+Clone this repo inside ~/.config/nixpkgs (must remove default nixpkgs before cloning)
+```
+
+rm -r ~/.config/nixpkgs
+git clone https://github.com/biosan/dotfiles ~/.config/nixpkgs
+home-manager switch
+
+```
+
+
+nano flake.nix
+
+```
+{
+    description = "My system configuration";
+    inputs = {
+        nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+        nix-darwin = {
+            url = "github:LnL7/nix-darwin";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        home-manager = {
+            url = "github:nix-community/home-manager";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+    };
+    # ...
+```
+
 
 ```
 experimental-features = nix-command flakes
