@@ -116,7 +116,7 @@ nix-channel --list
 To use the latest, potentially unstable, packages, you can add the `nixos-unstable` channel:
 
 ```bash
-sudo nix-channel --add [https://nixos.org/channels/nixos-unstable](https://nixos.org/channels/nixos-unstable) nixos
+sudo nix-channel --add https://nixos.org/channels/nixos-unstablehttps://nixos.org/channels/nixos-unstable) nixos
 ```
 
 To upgrade your NixOS system to the latest versions available in your subscribed channels, run:
@@ -161,7 +161,7 @@ A reboot might be necessary after this installation.
 If you haven't already installed Nix on macOS, you can do so with the following command:
 
 ```bash
-sh <(curl -L [https://nixos.org/nix/install](https://nixos.org/nix/install)) --darwin-use-unencrypted-nix-store-volume
+sh <(curl https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
 ```
 
 ### Add Home Manager and Unstable Channels
