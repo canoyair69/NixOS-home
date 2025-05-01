@@ -52,3 +52,29 @@ nix-channel --update
 nixos-rebuild switch
 7. Cleaning the Nix Store
 nix-collect-garbage [--delete-old -d]
+
+Install XCode CLI tools
+
+xcode-select --install
+Install Nix (a reboot could be necessary)
+
+sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
+Add home-manager and unstable channels
+
+nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable
+nix-channel --update
+export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+Install home-manager
+
+nix-shell '<home-manager>' -A install
+Clone this repo inside ~/.config/nixpkgs (must remove default nixpkgs before cloning)
+
+rm -r ~/.config/nixpkgs
+git clone https://github.com/biosan/dotfiles ~/.config/nixpkgs
+Setup home-manager configuration (install and configure programs) NOTE: Takes a loooong time
+
+home-manager switch
+Install Homebrew
+
+bash -c "$(curl -fsSL https://
