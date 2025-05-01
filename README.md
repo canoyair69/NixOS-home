@@ -19,3 +19,36 @@ $ tree $HOME/.dotfiles -a -I .git
 ├── flake.nix
 └── home.nix
 In this example, we’re storing all our dotfiles in the $HOME/.dotfiles/.config
+
+
+----------
+
+Generate an initial configuration:
+
+nixos-generate-config --root /mnt/nixos
+# /etc/nixos/configuration.nix
+# /etc/nixos/hardware-configuration.nix
+
+
+nixos-rebuild switch
+
+
+man configuration.nix
+
+
+wing as root:
+
+nix-channel --list
+# nixos https://nixos.org/channels/nixos-19.03
+If you want to live on the bleeding edge:
+
+nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+To upgrade NixOS:
+
+nixos-rebuild switch --upgrade
+The command is equivalent to the more verbose:
+
+nix-channel --update
+nixos-rebuild switch
+7. Cleaning the Nix Store
+nix-collect-garbage [--delete-old -d]
